@@ -18,10 +18,10 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     for name in os.listdir(OUTPUT_DIR):
         path = os.path.join(OUTPUT_DIR, name)
-        if os.path.isdir(path) and not os.path.islink(path):
-            shutil.rmtree(path)
-        else:
+        if os.path.islink(path) or not os.path.isdir(path):
             os.remove(path)
+        else:
+            shutil.rmtree(path)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(LINE)
     os.chmod(OUTPUT_FILE, 0o644)
